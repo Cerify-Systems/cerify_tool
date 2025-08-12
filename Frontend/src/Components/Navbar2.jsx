@@ -1,43 +1,40 @@
 import React from 'react';
-// import "./Navbar2.css";
 import { Link } from 'react-router-dom';
-import remove from "../Images/remove.png"
-
-
+import Cerify from "../Images/Cerify.png"; 
 
 const Navbar = () => {
     return (
-      <div className="pt-2">
-      <div className='flex justify-between pt-0 pl-5 pr-5 h-[4rem]  '>
-            <Link exact to="/"  activeClassName="active">
-              <img src={remove} alt="Back" className="h-[3rem]" />
-            </Link>
-            <div className="nav">
-              <ul className='flex list-none gap-8'>
-                <div className='flex gap-2 bg-[#cde0f5] pt-3 pl-1 pr-1 pb-3 rounded-md'>
-                <li><Link to="/About" className='hover:text-white hover:bg-[#0753a4] text-[#0753a4] rounded-md pt-2 pb-2'> &nbsp;&nbsp; About &nbsp;&nbsp; </Link></li>
-                  <li><Link to="/FFaq" className='hover:text-white hover:bg-[#0753a4] text-[#0753a4]  rounded-md pt-2 pb-2'> &nbsp;&nbsp; FAQ &nbsp;&nbsp;</Link></li>
-                  <li><a href="Help" className='hover:text-white hover:bg-[#0753a4] text-[#0753a4] rounded-md pt-2 pb-2'>&nbsp;&nbsp; Help &nbsp;&nbsp;</a></li>
-                </div>
-                <div className='flex gap-2 bg-[#cde0f5] pt-3 pl-1 pr-1 pb-3 rounded-md'>
-                  <li><Link to="/Signup" className='hover:text-white hover:bg-[#0753a4] text-[#0753a4]  rounded-md pt-2 pb-2'>&nbsp; Sign up &nbsp;</Link></li>
-                  <li><Link to="/Login" className='hover:text-white hover:bg-[#0753a4] text-[#0753a4] rounded-md pt-2 pb-2'>&nbsp; Login &nbsp;</Link></li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <div className='w-[100%] h-[0.02rem] bg-gray-400'></div>
-    </div>
+      <div className='nav flex flex-col md:flex-row justify-between items-center font-sans p-4'>
+        <div className='flex md:w-auto w-full justify-between'>
+          <Link to="/">
+            <img src={Cerify} alt="Cerify Logo" className="h-12 mr-auto" />
+          </Link>
+        </div>
 
+        {/* Desktop Navigation */}
+        <ul className='hidden md:flex list-none gap-8'>
+          <div className='flex gap-1.5 bg-blue-100 p-1 rounded-lg'>
+            <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
+              <Link to="/About">&nbsp;&nbsp; About &nbsp;&nbsp;</Link>
+            </li>
+            <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
+              <Link to="/FFaq">&nbsp;&nbsp; FAQ &nbsp;&nbsp;</Link>
+            </li>
+            <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
+              <Link to="/Help">&nbsp;&nbsp; Help &nbsp;&nbsp;</Link>
+            </li>
+          </div>
+          <div className='flex gap-1.5 bg-blue-100 p-1 rounded-lg'>
+            <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
+              <Link to="/Signup" className="signup">&nbsp; Sign up &nbsp;</Link>
+            </li>
+            <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
+              <Link to="/Login" className="login">&nbsp; Login &nbsp;</Link>
+            </li>
+          </div>
+        </ul>
+      </div>
     )
   }
   
   export default Navbar
-  
-
-
-
-
-
-
-
