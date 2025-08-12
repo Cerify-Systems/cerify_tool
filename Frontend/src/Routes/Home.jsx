@@ -130,7 +130,7 @@ function Home() {
               style={{ display: 'none' }}
             />
           </div>
-          <div>
+          {/* <div>
             <div className="my-8 flex items-center">
               <hr className="flex-grow border-y-[1px] border-black"></hr>
               <span className="px-4 text-xs font-bold text-black">OR</span>
@@ -147,7 +147,7 @@ function Home() {
                 disabled={isUploading}
               />
             </div>
-          </div>
+          </div> */}
           <button 
             type="submit" 
             className="bg-[#0a4fd7] mt-20 flex justify-center text-white w-full text-lg p-3 border-none rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
