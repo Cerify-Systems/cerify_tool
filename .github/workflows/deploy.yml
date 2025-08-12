@@ -19,7 +19,7 @@ jobs:
           node-version: '22.18.0'
 
       - name: Build frontend
-        working-directory: apps/Cerify-app/Frontend
+        working-directory: Frontend
         run: |
           npm ci --include=dev
           npm run build
