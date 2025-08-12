@@ -21,8 +21,8 @@ jobs:
       - name: Build frontend
         working-directory: Frontend
         run: |
-          npm ci
-          npm run build
+          npm ci --include=dev
+          CI=false npm run build
 
       - name: Write SSH key
         run: |
