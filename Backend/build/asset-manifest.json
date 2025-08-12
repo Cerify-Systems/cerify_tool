@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4790539a.css",
+    "main.js": "/static/js/main.fdc1f19f.js",
+    "static/js/453.68693753.chunk.js": "/static/js/453.68693753.chunk.js",
+    "static/media/profilepic.png": "/static/media/profilepic.8937b6ccc921623ce830.png",
+    "static/media/team.png": "/static/media/team.ce1b7359d6fc3773c6f2.png",
+    "static/media/crypto2.jpg": "/static/media/crypto2.153d491cd74279667605.jpg",
+    "static/media/Image1.png": "/static/media/Image1.e59e5c51444f94ae54ae.png",
+    "static/media/drop1.gif": "/static/media/drop1.8385aa51e0167db21146.gif",
+    "static/media/HelpImage.png": "/static/media/HelpImage.7576752ff531795d7b33.png",
+    "static/media/Cerify.png": "/static/media/Cerify.309f2d4051499ea9c430.png",
+    "static/media/ask.png": "/static/media/ask.8aa82c99c0dbb648c0bf.png",
+    "static/media/settings.png": "/static/media/settings.fd9cb79a2028b66f67eb.png",
+    "static/media/checkmark.png": "/static/media/checkmark.48d98e46aa2a117f3613.png",
+    "static/media/us-flag.png": "/static/media/us-flag.348322a7eb6fa906d005.png",
+    "static/media/remove.png": "/static/media/remove.e2ac2bfb56294e16a0b5.png",
+    "static/media/mexico.png": "/static/media/mexico.1b74394afe47159a9bf3.png",
+    "static/media/file-code.svg": "/static/media/file-code.d7321216a06343fa87e375c5391734bf.svg",
+    "index.html": "/index.html",
+    "static/media/link-2.svg": "/static/media/link-2.de4fc6c735a8c59de2ce9e3153caadaf.svg",
+    "main.4790539a.css.map": "/static/css/main.4790539a.css.map",
+    "main.fdc1f19f.js.map": "/static/js/main.fdc1f19f.js.map",
+    "453.68693753.chunk.js.map": "/static/js/453.68693753.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4790539a.css",
+    "static/js/main.fdc1f19f.js"
+  ]
+}

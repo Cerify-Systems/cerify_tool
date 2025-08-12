@@ -1,0 +1,144 @@
+.report-image-container {
+  width: 600px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(10,79,215,0.10);
+  padding: 36px 40px 28px 40px;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  color: #1a1a1a;
+  margin: 0 auto;
+}
+
+.report-header {
+  border-bottom: 1.5px solid #e6e8ec;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+}
+
+.report-title {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #0a4fd7;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.report-meta {
+  font-size: 1.05rem;
+  color: #555;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.report-summary {
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 0 18px 0;
+  padding: 18px 0;
+  border-bottom: 1.5px solid #e6e8ec;
+  border-top: 1.5px solid #e6e8ec;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.summary-label {
+  font-size: 0.98rem;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.summary-value {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #0a4fd7;
+}
+
+.report-issues {
+  margin: 18px 0 0 0;
+}
+
+.issues-title {
+  font-size: 1.18rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.no-issues {
+  color: #1db954;
+  font-weight: 500;
+  padding: 12px 0;
+}
+
+.issue-card {
+  background: #f8fafd;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  border-left: 4px solid #e6e8ec;
+  box-shadow: 0 2px 8px rgba(10,79,215,0.04);
+}
+
+.issue-card.severity-high { border-left-color: #ff3b30; }
+.issue-card.severity-medium { border-left-color: #ffa500; }
+.issue-card.severity-low { border-left-color: #0a4fd7; }
+
+.issue-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.02rem;
+  margin-bottom: 2px;
+}
+
+.issue-id {
+  font-weight: 600;
+  color: #0a4fd7;
+}
+
+.issue-severity {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.issue-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 2px;
+  color: #222;
+}
+
+.issue-meta {
+  font-size: 0.97rem;
+  color: #666;
+  margin-bottom: 4px;
+  display: flex;
+  gap: 18px;
+}
+
+.issue-desc {
+  font-size: 1.01rem;
+  color: #333;
+}
+
+.report-footer {
+  border-top: 1.5px solid #e6e8ec;
+  margin-top: 24px;
+  padding-top: 10px;
+  font-size: 0.98rem;
+  color: #888;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.report-version {
+  font-size: 0.95rem;
+  color: #bbb;
+}
