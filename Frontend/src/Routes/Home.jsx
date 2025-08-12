@@ -15,6 +15,10 @@ const contentMap = {
   'Help': Help,
 };
 
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://tool.cerify.ai' 
+  : 'http://127.0.0.1:5000'; 
+
 function Home() {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState('');
@@ -55,17 +59,25 @@ function Home() {
     setIsUploading(true);
 
     try {
+      if (file) {
+        localStorage.setItem('uploadFileInfo', JSON.stringify({
+          name: file.name,
+          size: file.size,
+          type: file.type
+        }));
+      }
+
       let response;
       if (file) {
         const formData = new FormData();
         formData.append('file', file);
         
-        response = await fetch('/upload', {
+        response = await fetch(`${API_BASE_URL}/upload`, {
           method: 'POST',
           body: formData,
         });
       } else if (url) {
-        response = await fetch('/analyze-url', {
+        response = await fetch(`${API_BASE_URL}/analyze-url`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url }),
@@ -81,12 +93,23 @@ function Home() {
         // Navigate to upload page (which shows progress)
         navigate('/Upload');
       } else {
-        const errorData = await response.json();
-        alert(`Upload failed: ${errorData.error || 'Unknown error'}`);
+        let errorMessage = 'Upload failed';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || `Server error: ${response.status}`;
+        } catch (e) {
+          errorMessage = `Server error: ${response.status} ${response.statusText}`;
+        }
+        alert(errorMessage);
+        console.error('Upload failed:', response.status, response.statusText);
       }
     } catch (error) {
       console.error('Upload error:', error);
-      alert('An error occurred during upload. Please try again.');
+      if (error.message.includes('Failed to fetch')) {
+        alert('Cannot connect to server. Please make sure the backend is running.');
+      } else {
+        alert('An error occurred during upload. Please try again.');
+      }
     } finally {
       setIsUploading(false);
     }
@@ -130,24 +153,6 @@ function Home() {
               style={{ display: 'none' }}
             />
           </div>
-          {/* <div>
-            <div className="my-8 flex items-center">
-              <hr className="flex-grow border-y-[1px] border-black"></hr>
-              <span className="px-4 text-xs font-bold text-black">OR</span>
-              <hr className="flex-grow border-y-[1px] border-black"></hr>
-            </div>
-            <div className="flex items-center border-b border-black my-4 pb-2">
-              <img src={Paste} alt="url" className='w-8 h-6 mr-2'/>
-              <input 
-                type="text" 
-                placeholder="Paste contract URL" 
-                value={url} 
-                onChange={handleUrlChange} 
-                className='flex-1 text-lg bg-transparent border-none outline-none'
-                disabled={isUploading}
-              />
-            </div>
-          </div> */}
           <button 
             type="submit" 
             className="bg-[#0a4fd7] mt-20 flex justify-center text-white w-full text-lg p-3 border-none rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
