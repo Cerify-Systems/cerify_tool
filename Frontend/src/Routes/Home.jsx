@@ -153,24 +153,6 @@ function Home() {
               style={{ display: 'none' }}
             />
           </div>
-          {/* <div>
-            <div className="my-8 flex items-center">
-              <hr className="flex-grow border-y-[1px] border-black"></hr>
-              <span className="px-4 text-xs font-bold text-black">OR</span>
-              <hr className="flex-grow border-y-[1px] border-black"></hr>
-            </div>
-            <div className="flex items-center border-b border-black my-4 pb-2">
-              <img src={Paste} alt="url" className='w-8 h-6 mr-2'/>
-              <input 
-                type="text" 
-                placeholder="Paste contract URL" 
-                value={url} 
-                onChange={handleUrlChange} 
-                className='flex-1 text-lg bg-transparent border-none outline-none'
-                disabled={isUploading}
-              />
-            </div>
-          </div> */}
           <button 
             type="submit" 
             className="bg-[#0a4fd7] mt-20 flex justify-center text-white w-full text-lg p-3 border-none rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
