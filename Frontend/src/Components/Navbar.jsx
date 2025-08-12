@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import About from '../Routes/Pages/About';
 import FAQ from '../Routes/Pages/FFaq';
-import Help from '../Routes/Pages/Help';
 import Cerify from "../Images/Cerify.png";
-// import { Link } from 'react-router-dom';
 
 const Navbar = ({ onLinkClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(null);
 
   const handleLinkClick = (event, page) => {
+    if (page === 'Help') {
+      setIsOpen(false); // Close mobile menu if open
+      return;
+    }
+    
     event.preventDefault();
     setCurrentPage(page);
     setIsOpen(true); // Open the panel when a link is clicked
-
   };
 
   const closePage = () => {
@@ -25,7 +27,6 @@ const Navbar = ({ onLinkClick }) => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
 
   return (
     <div className='nav flex flex-col md:flex-row justify-between items-center font-sans p-4'>
@@ -73,11 +74,8 @@ const Navbar = ({ onLinkClick }) => {
       </ul>
     </div>
 
-
-
       {/* Sliding Panel for Pages */}
       <div className={`fixed top-0 right-0 min-h-screen z-3 bg-[#fbfaf9] shadow-lg transform transition-transform duration-300 ease-in-out ${currentPage ? 'md:w-7/12 w-full' : 'hidden'}  ${isOpen ? 'translate-x-0' : 'translate-x-full'} md:w-7/12 w-full`}>
-      {/* flex-1 transition-all duration-300 ${currentPage ? 'md:w-7/12 w-full' : 'hidden'} */}
         <div className=" px-4 py-2 ">
           <button onClick={closePage} className="p-2 text-gray-500 focus:outline-none ">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +84,6 @@ const Navbar = ({ onLinkClick }) => {
           </button>
           {currentPage === 'About' && <About onClose={closePage} />}
           {currentPage === 'FFaq' && <FAQ onClose={closePage} />}
-          {currentPage === 'Help' && <Help onClose={closePage} />}
         </div>
       </div>
 
