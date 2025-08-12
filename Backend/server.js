@@ -12,7 +12,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
 // Serve React frontend build
-const buildPath = path.join(__dirname, '../Frontend/build');
+const buildPath = '/var/www/cerify_tool';
 if (fs.existsSync(buildPath)) {
   app.use(express.static(buildPath));
   app.get('*', (req, res, next) => {
@@ -22,7 +22,7 @@ if (fs.existsSync(buildPath)) {
 }
 
 // File upload setupz
-const benchmarkingContractsDir = '/home/baadalvm/SKLEE/klee/tools/klee/benchmarking_contracts';
+const benchmarkingContractsDir = '/home/cerifyvm/apps/SKLEE/klee/tools/klee/benchmarking_contracts';
 if (!fs.existsSync(benchmarkingContractsDir)) fs.mkdirSync(benchmarkingContractsDir, { recursive: true });
 
 const storage = multer.diskStorage({
@@ -50,14 +50,14 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
   const uploadedFileName = req.file.filename;
-  const scriptDir = '/home/baadalvm/SKLEE/klee/tools/klee';
+  const scriptDir = '/home/cerifyvm/apps/SKLEE/klee/tools/klee';
   const benchmarkingRelativePath = 'benchmarking_contracts/' + uploadedFileName;
   const uploadedFilePath = path.join(benchmarkingContractsDir, uploadedFileName);
 
   try {
     const py = spawn('python3', ['get_benchmarking.py', benchmarkingRelativePath], {
       cwd: scriptDir,
-      env: { ...process.env, PATH: '/home/baadalvm/SKLEE/klee/build/bin:' + process.env.PATH }
+      env: { ...process.env, PATH: '/home/cerifyvm/apps/SKLEE/klee/build/bin:/usr/local/llvm-12.0.1/bin:' + process.env.PATH }
     });
 
     let output = '', errorOutput = '';
@@ -96,9 +96,12 @@ app.get('/', (req, res) => {
 });
 
 
-app.listen(5000, '10.17.50.98', () => {
-  console.log(`Server running at http://cerify.ai/:${PORT}`);
-});
+// app.listen(5000, '10.17.50.98', () => {
+//   console.log(`Server running at http://cerify.ai/:${PORT}`);
+// });
 // app.listen(PORT, 'localhost', () => {
 //   console.log(`Server running at http://localhost:${PORT}`);
 // });
+app.listen(PORT, '127.0.0.1', () => {
+  console.log(`Server running at http://127.0.0.1:${PORT}`);
+});
