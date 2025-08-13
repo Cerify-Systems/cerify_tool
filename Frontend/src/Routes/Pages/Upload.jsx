@@ -16,7 +16,7 @@ const Upload = () => {
     
     if (!analysisResult && !fileInfo) {
       // No analysis result found, go back to home
-      navigate('/');
+      navigate('/', {replace: true });
       return;
     }
 
@@ -61,7 +61,7 @@ const Upload = () => {
 
       // Navigate to score page after completion
       setTimeout(() => {
-        navigate("/Score");
+        navigate("/Score", { replace: true });
       }, 1500);
 
     } catch (error) {
