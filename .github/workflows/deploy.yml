@@ -52,5 +52,5 @@ jobs:
             set -e
             cd /home/${USER}/apps/Cerify-app/Backend
             npm ci --omit=dev
-            pm2 restart cerify-tool-backend
+            pm2 restart cerify-tool-backend --update-env
           EOF

@@ -5,6 +5,10 @@ const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
 
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV === 'production' ? 'prod' : 'dev'}`
+});
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -12,7 +16,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
 // Serve React frontend build
-const buildPath = '/var/www/cerify_tool';
+const buildPath = process.env.FRONTEND_BUILD_PATH || '';
 if (fs.existsSync(buildPath)) {
   app.use(express.static(buildPath));
   app.get('*', (req, res, next) => {
@@ -22,7 +26,7 @@ if (fs.existsSync(buildPath)) {
 }
 
 // File upload setupz
-const benchmarkingContractsDir = '/home/cerifyvm/apps/SKLEE/klee/tools/klee/benchmarking_contracts';
+const benchmarkingContractsDir = process.env.BENCHMARK_PATH || '';
 if (!fs.existsSync(benchmarkingContractsDir)) fs.mkdirSync(benchmarkingContractsDir, { recursive: true });
 
 const storage = multer.diskStorage({
@@ -71,14 +75,14 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   }
 
   const uploadedFileName = req.file.filename;
-  const scriptDir = '/home/cerifyvm/apps/SKLEE/klee/tools/klee';
+  const scriptDir = process.env.KLEE_TOOL_PATH || '';
   const benchmarkingRelativePath = 'benchmarking_contracts/' + uploadedFileName;
   const uploadedFilePath = path.join(benchmarkingContractsDir, uploadedFileName);
 
   try {
     const py = spawn('python3', ['get_benchmarking.py', benchmarkingRelativePath], {
       cwd: scriptDir,
-      env: { ...process.env, PATH: '/home/cerifyvm/apps/SKLEE/klee/build/bin:/usr/local/llvm-12.0.1/bin:' + process.env.PATH }
+      env: { ...process.env, PATH: process.env.KLEE_BUILD_AND_LLVM_PATH + process.env.PATH }
     });
 
     let output = '', errorOutput = '';
@@ -106,23 +110,10 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-// // Fallback for frontend routes
-// app.get('/', (req, res) => {
-//   if (req.path.startsWith('/upload')) return res.status(404).json({ error: 'API endpoint not found' });
-//   res.sendFile(path.join(buildPath, 'index.html'));
-// });
-
 app.get('/', (req, res) => {
   res.json({ message: 'Cerify backend is running!' });
 });
 
-
-// app.listen(5000, '10.17.50.98', () => {
-//   console.log(`Server running at http://cerify.ai/:${PORT}`);
-// });
-// app.listen(PORT, 'localhost', () => {
-//   console.log(`Server running at http://localhost:${PORT}`);
-// });
 app.listen(PORT, '127.0.0.1', () => {
   console.log(`Server running at http://127.0.0.1:${PORT}`);
 });
