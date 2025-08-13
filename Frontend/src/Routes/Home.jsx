@@ -16,7 +16,7 @@ const contentMap = {
 };
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL;
-
+console.log(process.env.REACT_APP_BACKEND_URL);
 function Home() {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState('');
