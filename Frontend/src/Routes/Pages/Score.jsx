@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 import ReportImage from '../../Components/ReportImage';
 import '../../Components/ReportImage.css';
 import { useRef } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { app } from './firebase';
 
 const contentMap = {
   'About': About,
@@ -22,15 +24,32 @@ const contentMap = {
   'Help': Help,
 };
 
+const auth = getAuth(app);
+
 function Score() {
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const [sidePanelContent, setSidePanelContent] = useState('');
   const [analysisResult, setAnalysisResult] = useState(null);
+  const [user, setUser] = useState(null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const navigate = useNavigate();
 
   const reportRef = useRef();
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const handleDownloadReport = () => {
+    if (!user) {
+      setShowLoginModal(true);
+      return;
+    }
+
     if (!analysisResult) return;
     const issuesList = analysisResult.issuesList || [];
     const report = `
@@ -61,6 +80,20 @@ ${idx + 1}. [${issue.severity}] ${issue.title}
     window.URL.revokeObjectURL(url);
   };
 
+  const handleLoginRedirect = () => {
+    setShowLoginModal(false);
+    navigate('/Login');
+  };
+
+  const handleSignupRedirect = () => {
+    setShowLoginModal(false);
+    navigate('/Signup');
+  };
+
+  const closeLoginModal = () => {
+    setShowLoginModal(false);
+  };
+
   useEffect(() => {
     const storedResult = localStorage.getItem('analysisResult');
     if (storedResult) {
@@ -72,29 +105,6 @@ ${idx + 1}. [${issue.severity}] ${issue.title}
       }
     }
   }, [navigate]);
-
-//   const handleDownloadReport = () => {
-//     if (!analysisResult) return;
-//     const report = `
-// Solidity Contract Analysis Report
-// ================================
-// Score: ${analysisResult.score}/${analysisResult.total}
-// Vulnerabilities Found: ${analysisResult.vulnerabilities}
-// Total Issues: ${analysisResult.issues}
-// Lines of Code: ${analysisResult.lines}
-// Status: ${analysisResult.status}
-// Analysis completed on: ${new Date().toLocaleString()}
-//     `;
-//     const blob = new Blob([report], { type: 'text/plain' });
-//     const url = window.URL.createObjectURL(blob);
-//     const a = document.createElement('a');
-//     a.href = url;
-//     a.download = 'contract-analysis-report.txt';
-//     document.body.appendChild(a);
-//     a.click();
-//     document.body.removeChild(a);
-//     window.URL.revokeObjectURL(url);
-//   };
 
   const scoreValue = analysisResult?.score || 7.5;
   const totalValue = analysisResult?.total || 10;
@@ -173,6 +183,40 @@ ${idx + 1}. [${issue.severity}] ${issue.title}
           </button>
         </div>
       </div>
+
+      {/* Login Modal */}
+      {showLoginModal && (
+        <div className="login-modal-overlay">
+          <div className="login-modal">
+            <div className="login-modal-header">
+              <h2>Login Required</h2>
+              <button className="close-modal" onClick={closeLoginModal}>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div className="login-modal-content">
+              <div className="login-modal-icon">
+                <FontAwesomeIcon icon={faFileDownload} className="text-blue-600" />
+              </div>
+              <p>To download your analysis report, please sign in to your account or create a new one.</p>
+              <div className="login-modal-buttons">
+                <button className="login-btn" onClick={handleLoginRedirect}>
+                  Sign In
+                </button>
+                <button className="signup-btn" onClick={handleSignupRedirect}>
+                  Create Account
+                </button>
+              </div>
+              <p className="login-modal-note">
+                Your analysis results will be saved after you sign in.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <SidePanel isOpen={isSidePanelOpen} onClose={() => setIsSidePanelOpen(false)} content={sidePanelContent}/>
     </div>
   );
