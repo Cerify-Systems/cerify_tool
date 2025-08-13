@@ -49,6 +49,27 @@ const upload = multer({
 app.post('/upload', upload.single('file'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
+  //MOCK FOR DEV
+  if (process.env.NODE_ENV !== 'production') {
+    return res.json({
+      success: true,
+      result: {
+        score: 8,
+        total: 10,
+        vulnerabilities: 2,
+        issues: 3,
+        lines: 120,
+        status: 'completed',
+        contractName: req.file.originalname,
+        issuesList: [
+          { severity: 'Critical', title: 'Reentrancy', description: 'Reentrancy vulnerability found.' },
+          { severity: 'High', title: 'Unchecked Call', description: 'Unchecked external call.' },
+          { severity: 'Low', title: 'Timestamp Dependence', description: 'Uses block.timestamp for logic.' }
+        ]
+      }
+    });
+  }
+
   const uploadedFileName = req.file.filename;
   const scriptDir = '/home/cerifyvm/apps/SKLEE/klee/tools/klee';
   const benchmarkingRelativePath = 'benchmarking_contracts/' + uploadedFileName;
