@@ -60,8 +60,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       result: {
         score: 8,
         total: 10,
-        vulnerabilities: 2,
-        issues: 3,
+        vulnerabilities: 3,
         lines: 120,
         status: 'completed',
         contractName: req.file.originalname,
