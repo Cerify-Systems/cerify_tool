@@ -31,9 +31,9 @@ const Navbar = ({ onLinkClick }) => {
   return (
     <div className='nav flex flex-col md:flex-row justify-between items-center font-sans p-4'>
       <div className='flex md:w-auto w-full justify-between'>
-      <Link to="/">
-      <img src={Cerify} alt="Cerify Logo" className="h-12 mr-auto" />
-      </Link>
+      <a href="https://cerify.ai">
+        <img src={Cerify} alt="Cerify Logo" className="h-12 mr-auto" />
+      </a>
     
       {/* Hamburger Icon */}
       <button onClick={() => setIsOpen(!isOpen)} className="md:hidden focus:outline-none">
@@ -56,21 +56,21 @@ const Navbar = ({ onLinkClick }) => {
     {/* Sidebar Menu */}
     <div className={`fixed top-0  right-0 w-64 h-full z-2 bg-[#fbfaf9] shadow-lg transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
       <ul className='flex flex-col p-4'>
-        <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-[#0a4fd7] hover:text-white rounded-lg py-2.5 px-3 '>
+        {/* <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-[#0a4fd7] hover:text-white rounded-lg py-2.5 px-3 '>
           <Link to="/About" onClick={(e) => handleLinkClick(e, 'About')} className=' block'>&nbsp;&nbsp; About &nbsp;&nbsp;</Link>
-        </li>
-        <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-[#0a4fd7] hover:text-white rounded-lg py-2.5 px-3'>
+        </li> */}
+        {/* <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-[#0a4fd7] hover:text-white rounded-lg py-2.5 px-3'>
           <Link to="/FFaq" onClick={(e) => handleLinkClick(e, 'FFaq')} className=' block'>&nbsp;&nbsp; FAQ &nbsp;&nbsp;</Link>
-        </li>
+        </li> */}
         <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-[#0a4fd7] hover:text-white rounded-lg py-2.5 px-3'>
           <Link to="/Help" onClick={(e) => handleLinkClick(e, 'Help')} className=' block'>&nbsp;&nbsp; Help &nbsp;&nbsp;</Link>
         </li>
-        <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-[#0a4fd7] hover:text-white rounded-lg py-2.5 px-3'>
+        {/* <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-[#0a4fd7] hover:text-white rounded-lg py-2.5 px-3'>
           <Link to="/Signup" className="signup block" >&nbsp; Sign up &nbsp;</Link>
         </li>
         <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-[#0a4fd7] hover:text-white rounded-lg py-2.5 px-3'>
           <Link to="/Login" className="login  block">&nbsp; Login &nbsp;</Link>
-        </li>
+        </li> */}
       </ul>
     </div>
 
@@ -90,24 +90,24 @@ const Navbar = ({ onLinkClick }) => {
       {/* Desktop Navigation */}
       <ul className='hidden md:flex list-none gap-8'>
         <div className='flex gap-1.5 bg-blue-100 p-1 rounded-lg '>
-          <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
+          {/* <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
             <Link to="/About" onClick={(e) => handleLinkClick(e, 'About')}>&nbsp;&nbsp; About &nbsp;&nbsp;</Link>
           </li>
           <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
             <Link to="/FFaq" onClick={(e) => handleLinkClick(e, 'FFaq')}>&nbsp;&nbsp; FAQ &nbsp;&nbsp;</Link>
-          </li>
+          </li> */}
           <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
             <Link to="/Help" onClick={(e) => handleLinkClick(e, 'Help')}>&nbsp;&nbsp; Help &nbsp;&nbsp;</Link>
           </li>
         </div>
-        <div className='flex gap-1.5 bg-blue-100 p-1 rounded-lg'>
+        {/* <div className='flex gap-1.5 bg-blue-100 p-1 rounded-lg'>
         <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
             <Link to="/Signup" className="signup">&nbsp; Sign up &nbsp;</Link>
           </li>
           <li className='text-blue-600 transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white rounded-lg py-2.5 px-3'>
             <Link to="/Login" className="login">&nbsp; Login &nbsp;</Link>
           </li>
-        </div>
+        </div> */}
       </ul>
     </div>
   );
