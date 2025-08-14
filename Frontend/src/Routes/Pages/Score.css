@@ -1,223 +1,364 @@
 .heading-score{
-    padding-top: 1.5rem;
-    text-align: center;
-  }
-  .heading-score h1{
-    font-size: 1.8rem;
-    font-weight: 10;
-    /* margin-bottom: rem;  */
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  }
-  .heading-score p{
-    font-size: 0.7rem;
-    font-family:Geneva, Verdana, sans-serif;
-    color: grey;
-  }
-  .score-box {
-    margin: 3rem auto;
-    max-width: 30rem;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-  .score-circle {
-    display: flex;
-    align-items: center;
-    font-size: 6rem;
-    margin-bottom: 2rem;
-  }
-  .score-value {
-    color: #0062ff;
-  }
-  .score-total {
-    font-size: 2rem;
-    color: #767474;
-  }
-  .score-details {
-    display: flex;
-    gap: 5rem;
-    margin-bottom: 3rem;
-    align-items: center;
-  }
-  .score-pass, .score-fail {
-    display: flex;
-    align-items: center;
-  }
-  .score-pass span:first-child {
-    color: rgb(18, 134, 18);
-    margin-right: 1rem;
-    font-size: 1.5rem;
-  }
-  .score-pass{
-    color: rgb(18, 134, 18);
-    font-size: 0.8rem;
-    font-family: verdana;
-  }
-  .score-fail {
-    color: rgb(244, 29, 29);
-    font-size: 0.8rem;
-    font-family: Verdana;
-  }
-  .score-fail span:first-child {
-    color: rgb(244, 29, 29);
-    margin-right: 1rem;
-    font-size: 1.5rem;
-  }
-  .download-button {
-    background-color: #0a4fd7;
-    color: #fff;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 5rem;
-    cursor: pointer;
-    width: 80%;
-    font-size: larger;
-    font-family: verdana;
-    transition: background-color 0.3s ease;
-  }
-  .download-button:hover {
-    background-color: #0841c4;
-  }
-  .download-button a{
-    text-decoration: none;
-    color: #fff;
-  }
-  .custom-progressbar .CircularProgressbar-text {
-    transform: rotate(90deg);
-    /* dominant-baseline:unset; */
-    text-anchor: middle;
-    transform-origin: center center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .custom-progressbar .CircularProgressbar-text {
-    font-size: 24px; 
-  }
-  .custom-progressbar .score {
-    font-size: 24px; 
-  }
-  .custom-progressbar .total {
-    font-size: 12px; 
-    display: block;
-    text-align: center;
-  }
-  .progressbar-container{
-    display: flex;
-    align-items: center;
-  }
-  .custom-text {
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    display: flex;
-    align-items: center;
-    color: #0a4fd7;
-  }
-  .horizontalline {
-    border: none;
-    height: 0.01rem;
-    background-color: #b4b6b7;
-    margin: 1rem 0;
-  }
-  .tick{
-  padding: 0.6rem 0.7rem;
-  border-radius: 2rem;
-  background-color: rgb(238, 250, 238);
-  }
-  .cross{
-  padding: 0.6rem 0.7rem;
-  border-radius: 2rem;
-  background-color: rgb(254, 235, 235);
-  }
-
-
-
-  .customtext2{
-    /* top: 10%; */
-  }
-  .custom-text2 {
-    position: absolute;
-    top: 70%;
-    left: 70%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    display: flex;
-    align-items: center;
-    color: #0a4fd7;
-  }
-  .custom-text2-9 {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    display: flex;
-    align-items: center;
-    color: #0a4fd7;
-  }
-.stat-cards-row {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 2rem;
-  margin: 2rem 0 1.5rem 0;
-  flex-wrap: nowrap;
-  max-width: 700px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
-.stat-card {
-  background: #fff;
-  border-radius: 1.2rem;
-  box-shadow: 0 2px 16px rgba(10, 79, 215, 0.08), 0 1.5px 6px rgba(0,0,0,0.04);
-  padding: 1.2rem 2.2rem 1.1rem 2.2rem;
-  min-width: 180px;
-  flex: 1 1 0;
+.heading-score h1{
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #0b4aca;
+  margin-bottom: 0.5rem;
+  font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+}
+
+.heading-score p{
+  font-size: 1rem;
+  font-family: 'Segoe UI', Verdana, sans-serif;
+  color: #6b7280;
+}
+
+/* Main Two-Column Layout */
+.score-main-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  min-height: 600px;
+}
+
+.score-left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.score-right-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Score Meter Section */
+.score-meter-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.meter-container {
+  position: relative;
+  width: 280px;
+  height: 280px;
+}
+
+.custom-text-new {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: box-shadow 0.2s;
-  position: relative;
-  max-width: 220px;
+  gap: 0.25rem;
 }
-.stat-card:hover {
-  box-shadow: 0 4px 24px rgba(10, 79, 215, 0.16), 0 2px 8px rgba(0,0,0,0.08);
+
+.issues-count {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  line-height: 1;
 }
-.stat-icon {
-  font-size: 2.2rem;
-  margin-bottom: 0.5rem;
+
+.issues-label {
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-.stat-label {
+
+.status-label {
   font-size: 1rem;
-  color: #888;
-  margin-bottom: 0.2rem;
-  font-family: 'Segoe UI', Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 600;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-.stat-value {
+
+.enhanced-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.enhanced-stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 1.2rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 24px rgba(10, 79, 215, 0.08), 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.enhanced-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0a4fd7, #31dbd8);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.enhanced-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(10, 79, 215, 0.12), 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.enhanced-stat-card:hover::before {
+  opacity: 1;
+}
+
+.stat-icon-container {
+  background: linear-gradient(135deg, #0a4fd7, #31dbd8);
+  border-radius: 1rem;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+}
+
+.enhanced-stat-card .stat-icon {
+  font-size: 1.25rem;
+  color: white;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.stat-description {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* Custom meter text with 10-point scale */
+.custom-text-new {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.score-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1rem;
+}
+
+.score-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  line-height: 1;
+}
+
+.score-divider {
+  font-size: 2rem;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.score-total {
+  font-size: 2rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.score-label {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Card specific colors */
+.issues .stat-icon-container {
+  background: linear-gradient(135deg, #ef4444, #fbbf24);
+}
+
+.vulnerabilities .stat-icon-container {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+.lines-of-code .stat-icon-container {
+  background: linear-gradient(135deg, #0a4fd7, #8b5cf6);
+}
+
+/* Security Score Badge */
+.security-score-badge {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(10, 79, 215, 0.08), 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.badge-icon {
+  font-size: 2rem;
+}
+
+.badge-content {
+  flex: 1;
+}
+
+.badge-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.badge-status {
   font-size: 1.5rem;
-  font-weight: bold;
-  color: #0a4fd7;
-  font-family: 'Trebuchet MS', Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
 }
-.stat-code .stat-icon {
-  color: #0a4fd7;
+
+.badge-description {
+  font-size: 0.9rem;
+  color: #6b7280;
 }
-.stat-vuln .stat-icon {
-  color: #e74c3c;
+
+/* Report Preview Section */
+.report-preview-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
-.stat-status .stat-icon {
-  color: #2ecc40;
+
+.report-preview-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 1rem;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
-.stat-status-good .stat-value {
-  color: #2ecc40;
+
+.report-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  transform: scale(0.85);      
+  transform-origin: top right;
+  padding: 0;                
+  margin: 0;                 
 }
-.stat-status-bad .stat-value {
-  color: #e74c3c;
+
+/* Download Section */
+.download-section {
+  margin-top: -5rem;
+  padding: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.download-container {
+  text-align: center;
+  max-width: 600px;
+}
+
+.download-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.download-description {
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+.download-button-enhanced {
+  background: linear-gradient(135deg, #0a4fd7, #31dbd8);
+  color: white;
+  padding: 1.25rem 3rem;
+  border: none;
+  border-radius: 3rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 24px rgba(10, 79, 215, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.download-button-enhanced:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(10, 79, 215, 0.4);
+}
+
+/* Legacy styles for compatibility */
+.score-box {
+  display: none; /* Hide old layout */
 }
 
 /* Login Modal Styles */
@@ -259,7 +400,7 @@
   font-weight: 600;
   color: #1a202c;
   margin: 0;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
 .close-modal {
@@ -303,7 +444,6 @@
   color: #4a5568;
   margin-bottom: 2rem;
   line-height: 1.6;
-  font-family: 'Segoe UI', Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .login-modal-buttons {
@@ -321,7 +461,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
 .login-btn {
@@ -353,40 +493,40 @@
   font-style: italic;
 }
 
-@media (max-width: 900px) {
-  .stat-cards-row {
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .enhanced-stats-grid {
+    grid-template-columns: 1fr;
     gap: 1rem;
-    max-width: 100%;
   }
-  .stat-card {
-    min-width: 120px;
-    max-width: 180px;
-    padding: 1rem 1rem 0.9rem 1rem;
+  
+  .enhanced-stat-card {
+    flex-direction: row;
+    text-align: left;
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+  
+  .stat-content {
+    align-items: flex-start;
   }
 }
 
-@media (max-width: 700px) {
-  .stat-cards-row {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.2rem;
-  }
-  .stat-card {
-    min-width: 180px;
-    width: 90%;
-    max-width: 400px;
+@media (max-width: 768px) {
+  .enhanced-stat-card {
+    padding: 1.25rem;
+    gap: 0.75rem;
   }
   
-  .login-modal {
-    margin: 1rem;
-    max-width: calc(100% - 2rem);
+  .stat-number {
+    font-size: 1.75rem;
   }
   
-  .login-modal-header, .login-modal-content {
-    padding: 1.5rem;
+  .score-number {
+    font-size: 2.5rem;
   }
   
-  .login-modal-buttons {
-    flex-direction: column;
+  .score-divider, .score-total {
+    font-size: 1.5rem;
   }
 }

@@ -2,11 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Navbar from '../../Components/Navbar';
-import { Flex, Card } from "rebass";
 import './Score.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileDownload, faCode, faBug, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { faCircleCheck, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+import { faFileDownload, faCode, faBug, faCheckCircle, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import SidePanel from '../../Components/SidePanel';
 import About from '../Pages/About';
 import FFaq from '../Pages/FFaq';
@@ -71,9 +69,8 @@ function Score() {
 Cerify Security Analysis Report
 ==============================
 Contract: ${analysisResult.contractName || 'Unknown'}
-Score: ${analysisResult.score}/${analysisResult.total}
-Vulnerabilities Found: ${analysisResult.vulnerabilities}
-Total Issues: ${analysisResult.issues}
+Score: ${calculateScore()}/10
+Issues Found: ${totalIssues}
 Lines of Code: ${analysisResult.lines}
 Status: ${analysisResult.status}
 Analysis completed on: ${new Date().toLocaleString()}
@@ -116,23 +113,10 @@ ${idx + 1}. [${issue.severity}] ${issue.title}
         const result = JSON.parse(storedResult);
         setAnalysisResult(result);
       } catch {
-        setAnalysisResult({ score: 7.5, total: 10, vulnerabilities: 1, issues: 0, lines: 0, status: 'completed' });
+        setAnalysisResult({ score: 7.5, total: 10, vulnerabilities: 3, issues: 3, lines: 120, status: 'completed' });
       }
     }
   }, [navigate]);
-
-  const scoreValue = analysisResult?.score || 7.5;
-  const totalValue = analysisResult?.total || 10;
-  const vulnerabilities = analysisResult?.vulnerabilities || 2;
-  const issues = analysisResult?.issues || 5;
-  const Value = (scoreValue / totalValue) * 100;
-
-  const CustomText = () => (
-    <div className="custom-text">
-      <span style={{ fontSize: '4rem', fontFamily: 'Verdana' }}>{scoreValue}</span>
-      <span style={{ fontSize: '1.5rem', fontFamily: 'monospace' }}>/ {totalValue}</span>
-    </div>
-  );
 
   if (!analysisResult) {
     return (
@@ -145,56 +129,129 @@ ${idx + 1}. [${issue.severity}] ${issue.title}
     );
   }
 
+  // Use vulnerabilities as the primary source of truth for total issues
+  const totalIssues = analysisResult?.vulnerabilities || analysisResult?.issues || 0;
+  const lines = analysisResult?.lines || 0;
+
+  // Calculate 10-point scale based on total issues
+  const calculateScore = () => {
+    if (totalIssues === 0) return 10;
+    if (totalIssues === 1) return 8;
+    if (totalIssues === 2) return 7;
+    if (totalIssues === 3) return 6;
+    if (totalIssues === 4) return 5;
+    if (totalIssues === 5) return 4;
+    if (totalIssues === 6) return 3;
+    if (totalIssues === 7) return 2;
+    if (totalIssues >= 8) return 1;
+    return Math.max(1, 10 - totalIssues);
+  };
+
+  const getScoreColor = (issueCount) => {
+    if (issueCount === 0) return '#10b981';
+    if (issueCount <= 2) return '#fbbf24';
+    if (issueCount <= 5) return '#f97316';
+    return '#ef4444';
+  };
+
+  const getScoreStatus = (issueCount) => {
+    if (issueCount === 0) return 'Excellent';
+    if (issueCount <= 2) return 'Good';
+    if (issueCount <= 5) return 'Moderate';
+    return 'Poor';
+  };
+
+  const scoreColor = getScoreColor(totalIssues);
+  const scoreStatus = getScoreStatus(totalIssues);
+
+  const progressValue = Math.max(0, ((totalIssues) / 10) * 100);
+
+  const CustomText = () => (
+    <div className="custom-text-new">
+      <div className="score-display">
+        <span className="score-number">{totalIssues}</span>
+      </div>
+      <div className="score-label">Issues Found</div>
+      <div className="status-label" style={{ color: scoreColor }}>{scoreStatus}</div>
+    </div>
+  );
+
   return (
     <div className="score-page">
       <Navbar onLinkClick={(c) => setSidePanelContent(contentMap[c])} />
+      
       <div className='heading-score'>
-        <h1>Your score</h1>
-        <p>Analysis completed successfully</p>
+        <h1>Security Analysis Results</h1>
+        <p>Analysis completed successfully • {new Date().toLocaleDateString()}</p>
       </div>
-      <div className="score-box">
-        <Card style={{ width: 300, height: 250 }}>
-          <Card>
-            <div className="progressbar-container">
+
+      {/* Two Column Layout */}
+      <div className="score-main-container">
+        {/* Left Column - Score Meter and Stats */}
+        <div className="score-left-column">
+          <div className="score-meter-section">
+            <div className="meter-container">
               <CircularProgressbar
-                value={Value}
-                circleRatio={0.6}
-                strokeWidth={11}
+                value={progressValue}
+                circleRatio={0.65}
+                strokeWidth={8}
                 styles={buildStyles({
-                  rotation: 0.7,
-                  pathColor: Value >= 70 ? '#0a4fd7' : Value >= 40 ? '#ffa500' : '#ff0000'
+                  rotation: 0.675,
+                  pathColor: scoreColor,
+                  trailColor: '#dbdbdbff',
+                  strokeLinecap: 'round'
                 })}
               />
               <CustomText />
             </div>
-          </Card>
-        </Card>
-        <hr className='horizontalline'/>
-        <div className="score-details">
-          <div className="score-pass">
-            <span className='tick'><FontAwesomeIcon icon={faCircleCheck} /></span>
-            <span>{totalValue - vulnerabilities} / {totalValue} checks passed</span>
           </div>
-          <div className="score-fail">
-            <span className='cross'><FontAwesomeIcon icon={faCircleXmark} /></span>
-            <span>{issues} issues found</span>
+          <div className="enhanced-stats-grid">
+            <div className="enhanced-stat-card issues">
+              <div className="stat-icon-container">
+                <FontAwesomeIcon icon={faBug} className="stat-icon" />
+              </div>
+              <div className="stat-content">
+                <div className="stat-number">{totalIssues}</div>
+                <div className="stat-label">Total Issues</div>
+                <div className="stat-description">Security vulnerabilities found</div>
+              </div>
+            </div>
+
+            <div className="enhanced-stat-card lines-of-code">
+              <div className="stat-icon-container">
+                <FontAwesomeIcon icon={faCode} className="stat-icon" />
+              </div>
+              <div className="stat-content">
+                <div className="stat-number">{lines}</div>
+                <div className="stat-label">Lines of Code</div>
+                <div className="stat-description">Total code analyzed</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="stat-cards-row">
-          <div className="stat-card stat-code"><FontAwesomeIcon icon={faCode} /><div>{analysisResult.lines}</div></div>
-          <div className="stat-card stat-vuln"><FontAwesomeIcon icon={faBug} /><div>{vulnerabilities}</div></div>
-          <div className={`stat-card ${analysisResult.status === 'completed' ? 'stat-status-good' : 'stat-status-bad'}`}>
-            <FontAwesomeIcon icon={faCheckCircle} /><div>{analysisResult.status}</div>
+
+        {/* Right Column - Report Preview */}
+        <div className="score-right-column">
+          <div className="report-preview-section">
+            <div className="report-container">
+              <ReportImage
+                analysisResult={analysisResult}
+                issues={analysisResult.issuesList || []}
+                ref={reportRef}
+              />
+            </div>
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2rem' }}>
-          <ReportImage
-            analysisResult={analysisResult}
-            issues={analysisResult.issuesList || []}
-            ref={reportRef}
-          />
-          <button className="download-button" onClick={handleDownloadReport}>
-            Download report as text <FontAwesomeIcon icon={faFileDownload} />
+      </div>
+
+      {/* Download Section - Centered Below */}
+      <div className="download-section">
+        <div className="download-container">
+          <h3 className="download-title">Export Your Report</h3>
+          <p className="download-description">Download your comprehensive security analysis report</p>
+          <button className="download-button-enhanced" onClick={handleDownloadReport}>
+            <FontAwesomeIcon icon={faFileDownload} />
+            Download Report as Text
           </button>
         </div>
       </div>

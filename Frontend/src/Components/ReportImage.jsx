@@ -8,7 +8,7 @@ const ReportImage = forwardRef(({ analysisResult, issues }, ref) => {
   const score = analysisResult?.score ?? 'N/A';
   const total = analysisResult?.total ?? 'N/A';
   const vulnerabilities = analysisResult?.vulnerabilities ?? 0;
-  const status = analysisResult?.status ?? 'N/A';
+  // const status = analysisResult?.status ?? 'N/A';
   const issuesCount = Array.isArray(issues) ? issues.length : (analysisResult?.issues ?? 0);
 
   return (
@@ -34,10 +34,10 @@ const ReportImage = forwardRef(({ analysisResult, issues }, ref) => {
           <span className="summary-label">Issues</span>
           <span className="summary-value">{issuesCount}</span>
         </div>
-        <div className="summary-item">
+        {/* <div className="summary-item">
           <span className="summary-label">Status</span>
           <span className="summary-value">{status}</span>
-        </div>
+        </div> */}
       </section>
       <section className="report-issues">
         <div className="issues-title">Issues Detected</div>
