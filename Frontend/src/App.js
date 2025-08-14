@@ -70,11 +70,11 @@ const App = () => {
         {user == null ? (
           <>
             <Route path="/" element={<Home />} />
-            <Route path="/Login" element={<Login />} />
+            {/* <Route path="/Login" element={<Login />} /> */}
             <Route path="/Upload" element={<Upload />} />
             <Route path="/Score" element={<Score />} />
-            <Route path="/FFaq" element={<FFaq />} />
-            <Route path="/Signup" element={<Signup />} />
+            {/* <Route path="/FFaq" element={<FFaq />} /> */}
+            {/* <Route path="/Signup" element={<Signup />} /> */}
             <Route path="/Help" element={<Help />} />
        // Here i have added the all the auth routes , after work del. it ...
             
