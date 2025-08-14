@@ -60,10 +60,10 @@ function Score() {
   }, []);
 
   const handleDownloadReport = () => {
-    if (!user) {
-      setShowLoginModal(true);
-      return;
-    }
+    // if (!user) {
+    //   setShowLoginModal(true);
+    //   return;
+    // }
 
     if (!analysisResult) return;
     const issuesList = analysisResult.issuesList || [];
