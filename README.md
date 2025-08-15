@@ -38,8 +38,8 @@ Direct commits to them are strictly prohibited.
 
 ### 👥 Approvals
 
-All MRs/PRs **must** be approved before merging.
-**Required reviewers:** @BitByNIK, @Phaneesh-Katti or @subodhvsharma
+- All MRs/PRs **must** be approved before merging.
+- **Required reviewers:** @BitByNIK, @Phaneesh-Katti or @subodhvsharma.
 
 `prod` merges happen only by maintainers.
 
