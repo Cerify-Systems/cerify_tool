@@ -6,7 +6,7 @@ const Navbar = () => {
     return (
       <div className='nav flex flex-col md:flex-row justify-between items-center font-sans p-4'>
         <div className='flex md:w-auto w-full justify-between'>
-          <a href="https://cerify.ai">
+          <a href={process.env.REACT_APP_HOME_URL}>
             <img src={Cerify} alt="Cerify Logo" className="h-12 mr-auto" />
           </a>
         </div>
