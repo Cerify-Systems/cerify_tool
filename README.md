@@ -1,196 +1,65 @@
-# Cerify App - Solidity Contract Analysis
+# Cerify Toolpage
 
-A web application for analyzing Solidity smart contracts for security vulnerabilities and providing detailed reports.
+---
 
-## Features
+## ⚠️ Branch Workflow & Protection Policy
 
-- **File Upload**: Upload .sol and .txt files for analysis
-- **URL Analysis**: Analyze contracts from URLs
-- **Security Analysis**: Detect common Solidity vulnerabilities
-- **Detailed Reports**: Get comprehensive analysis reports with scores
-- **User Authentication**: Firebase-based user management
-- **Progress Tracking**: Real-time upload and analysis progress
+🚫 **DO NOT push directly to `dev` or `prod`**  
+These branches are protected and managed by the maintainers.  
+Direct commits to them are strictly prohibited.
 
-## Prerequisites
+---
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
-- Git Bash or similar terminal
+### 🔒 Rules
 
-## Installation & Setup
+- **Never** commit or push directly to `dev` or `prod`.
+- All work must be done in a **feature branch** created from `dev`.
+  - **Branch name format:**
+    ```
+    name-dev
+    ```
+    _Examples:_ `alex-dev`, `sam-dev`, `ravi-dev`
+- Merge Requests (MRs) / Pull Requests (PRs) must **target `dev`** — never `prod`.
+- `prod` merges happen **only** from `dev` and **only** by maintainers.
+- Every MR/PR must be **approved** before merge.
 
-### Option 1: Quick Start (Windows)
-1. Double-click `start-app.bat` to automatically start both servers
-2. Wait for both servers to start
-3. Open http://localhost:3000 in your browser
+---
 
-### Option 2: Manual Setup
+### ✅ Process
 
-#### Backend Setup
-```bash
-cd Backend
-npm install
-npm start
-```
+1. Create a branch from `dev` using the `name-dev` format.
+2. Complete your changes.
+3. Open an MR/PR targeting **`dev`** (never `prod`).
+4. Tag the required reviewers for approval (see list below).
+5. Merge only after all approvals and checks pass.
+6. Maintainers will promote tested changes from `dev` to `prod`.
 
-#### Frontend Setup
-```bash
-cd Frontend
-npm install
-npm start
-```
+---
 
-## Usage
+### 👥 Approvals
 
-1. **Home Page**: Upload a Solidity contract file (.sol) or paste a contract URL
-2. **Analysis**: The system will analyze the contract for security vulnerabilities
-3. **Progress**: Watch the real-time progress of the analysis
-4. **Results**: View detailed analysis results with security scores
-5. **Download**: Download the analysis report as a text file
+All MRs/PRs **must** be approved before merging.
+**Required reviewers:** @BitByNIK, @Phaneesh-Katti or @subodhvsharma
 
-## API Endpoints
+`prod` merges happen only by maintainers.
 
-### Backend (http://localhost:5000)
+---
 
-- `GET /` - Health check
-- `POST /upload` - Upload and analyze a contract file
-- `POST /analyze-url` - Analyze a contract from URL
+### ❌ Common Violations
 
-### Request Format for File Upload
-```javascript
-const formData = new FormData();
-formData.append('file', fileObject);
+- Opening an MR/PR with `prod` as the target branch.
+- Pushing commits directly to `dev` or `prod`.
+- Using any branch name not following the `name-dev` format.
+- Merging without the required number of approvals.
 
-fetch('http://localhost:5000/upload', {
-  method: 'POST',
-  body: formData
-});
-```
+---
 
-### Response Format
-```json
-{
-  "success": true,
-  "result": {
-    "score": 8,
-    "total": 10,
-    "vulnerabilities": 2,
-    "issues": 5,
-    "lines": 150,
-    "status": "completed"
-  },
-  "message": "Contract analyzed successfully"
-}
-```
+### ⚠️ Consequences
 
-## Security Analysis
+Bypassing this workflow can:
 
-The system checks for common Solidity vulnerabilities:
+- Introduce breaking changes to production.
+- Cause deployment failures.
+- Delay releases due to unplanned rollbacks.
 
-- **Reentrancy Attacks**: Detects unsafe external calls
-- **Access Control**: Identifies missing access modifiers
-- **Arithmetic Issues**: Checks for overflow/underflow risks
-- **Blockchain Variables**: Warns about timestamp and block number usage
-- **Dangerous Functions**: Flags selfdestruct and low-level calls
-
-## File Structure
-
-```
-Cerify-app/
-├── Backend/
-│   ├── server.js          # Main backend server
-│   ├── package.json       # Backend dependencies
-│   └── uploads/           # Temporary file storage
-├── Frontend/
-│   ├── src/
-│   │   ├── Routes/
-│   │   │   ├── Home.jsx           # Main upload page
-│   │   │   └── Pages/
-│   │   │       ├── AddFile.jsx    # File upload component
-│   │   │       ├── Upload.jsx     # Progress tracking
-│   │   │       └── Score.jsx      # Results display
-│   │   └── App.js         # Main app component
-│   └── package.json       # Frontend dependencies
-├── test.sol              # Sample contract for testing
-└── start-app.bat         # Windows startup script
-```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Port Already in Use**
-   - Backend: Change PORT in `Backend/server.js`
-   - Frontend: React will automatically suggest an alternative port
-
-2. **CORS Errors**
-   - Ensure backend is running on http://localhost:5000
-   - Check that CORS middleware is properly configured
-
-3. **File Upload Fails**
-   - Verify file is .sol or .txt format
-   - Check file size is under 5MB
-   - Ensure backend server is running
-
-4. **Analysis Not Working**
-   - Check backend console for errors
-   - Verify the uploads directory exists
-   - Ensure proper file permissions
-
-### Backend Logs
-Check the backend console for detailed error messages and analysis progress.
-
-### Frontend Logs
-Open browser developer tools (F12) to see frontend errors and network requests.
-
-## Development
-
-### Adding New Vulnerability Checks
-
-Edit `Backend/server.js` in the `analyzeSolidityContract` function:
-
-```javascript
-// Add new vulnerability check
-if (contractContent.includes('dangerous_pattern')) {
-  vulnerabilities++;
-  issues++;
-}
-```
-
-### Customizing Analysis
-
-Modify the scoring algorithm in the backend:
-
-```javascript
-// Customize score calculation
-let score = 10 - vulnerabilities;
-if (score < 0) score = 0;
-```
-
-## Testing
-
-Use the provided `test.sol` file to test the analysis functionality:
-
-1. Upload the test contract
-2. Verify analysis results
-3. Check that vulnerabilities are detected
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License.
-
-## Support
-
-For issues and questions:
-1. Check the troubleshooting section
-2. Review the console logs
-3. Ensure all dependencies are installed
-4. Verify both servers are running # Cerify-Complete
+Always follow the process to keep `dev` and `prod` stable.

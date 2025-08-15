@@ -36,7 +36,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build:dev": "cp envs/.env.development .env && react-scripts build && rm .env",
+    "build": "cp envs/.env.production .env && react-scripts build && rm .env",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

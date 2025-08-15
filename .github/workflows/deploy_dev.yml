@@ -1,0 +1,56 @@
+name: Deploy Tool (dev)
+
+on:
+  push: { branches: [ dev ] }
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.18.0'
+
+      - name: Build frontend
+        working-directory: Frontend
+        run: |
+          npm ci --include=dev
+          CI=false npm run build:dev
+
+      - name: Write SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+
+      - name: Rsync frontend -> /var/www/cerify_tool_dev
+        run: |
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519" \
+            Frontend/build/ \
+            ${SSH_USER}@${SSH_HOST}:/var/www/cerify_tool_dev/
+
+      - name: Rsync backend -> /home/${SSH_USER}/apps/Cerify-app_dev/Backend
+        run: |
+          rsync -az --delete \
+            --exclude ".git" --exclude "node_modules" \
+            -e "ssh -i ~/.ssh/id_ed25519" \
+            Backend/ \
+            ${SSH_USER}@${SSH_HOST}:/home/${SSH_USER}/apps/Cerify-app_dev/Backend/
+
+      - name: npm ci (prod) & PM2 restart
+        run: |
+          ssh -i ~/.ssh/id_ed25519 ${SSH_USER}@${SSH_HOST} <<'EOF'
+            set -e
+            cd /home/${USER}/apps/Cerify-app_dev/Backend
+            npm ci --omit=dev
+            pm2 restart cerify-tool-dev-backend
+          EOF
