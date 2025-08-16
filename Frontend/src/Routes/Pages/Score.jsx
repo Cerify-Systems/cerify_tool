@@ -15,6 +15,7 @@ import '../../Components/ReportImage.css';
 import { useRef } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from './firebase';
+import jsPDF from 'jspdf';
 
 const contentMap = {
   'About': About,
@@ -56,13 +57,26 @@ function Score() {
 
     return () => unsubscribe();
   }, []);
+  
+// Use vulnerabilities as the primary source of truth for total issues
+  const totalIssues = analysisResult?.vulnerabilities || analysisResult?.issues || 0;
+  const lines = analysisResult?.lines || 0;
 
-  const handleDownloadReport = () => {
-    // if (!user) {
-    //   setShowLoginModal(true);
-    //   return;
-    // }
+  // Calculate 10-point scale based on total issues
+  const calculateScore = () => {
+    if (totalIssues === 0) return 10;
+    if (totalIssues === 1) return 8;
+    if (totalIssues === 2) return 7;
+    if (totalIssues === 3) return 6;
+    if (totalIssues === 4) return 5;
+    if (totalIssues === 5) return 4;
+    if (totalIssues === 6) return 3;
+    if (totalIssues === 7) return 2;
+    if (totalIssues >= 8) return 1;
+    return Math.max(1, 10 - totalIssues);
+  };
 
+   const handleDownloadReport = () => {
     if (!analysisResult) return;
     const issuesList = analysisResult.issuesList || [];
     const report = `
@@ -81,15 +95,16 @@ ${idx + 1}. [${issue.severity}] ${issue.title}
    Description: ${issue.description}
 `).join('')}
     `;
-    const blob = new Blob([report], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'contract-analysis-report.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+
+    // Create a new PDF doc
+    const doc = new jsPDF();
+    // Split long text into lines
+    const lines = doc.splitTextToSize(report, 180); // 180 is width, adjust if needed
+
+    // Add the lines to the PDF
+    doc.text(lines, 10, 10);
+    // Save the PDF
+    doc.save('contract-analysis-report.pdf');
   };
 
   const handleLoginRedirect = () => {
@@ -128,24 +143,6 @@ ${idx + 1}. [${issue.severity}] ${issue.title}
       </div>
     );
   }
-
-  // Use vulnerabilities as the primary source of truth for total issues
-  const totalIssues = analysisResult?.vulnerabilities || analysisResult?.issues || 0;
-  const lines = analysisResult?.lines || 0;
-
-  // Calculate 10-point scale based on total issues
-  const calculateScore = () => {
-    if (totalIssues === 0) return 10;
-    if (totalIssues === 1) return 8;
-    if (totalIssues === 2) return 7;
-    if (totalIssues === 3) return 6;
-    if (totalIssues === 4) return 5;
-    if (totalIssues === 5) return 4;
-    if (totalIssues === 6) return 3;
-    if (totalIssues === 7) return 2;
-    if (totalIssues >= 8) return 1;
-    return Math.max(1, 10 - totalIssues);
-  };
 
   const getScoreColor = (issueCount) => {
     if (issueCount === 0) return '#10b981';
@@ -251,7 +248,7 @@ ${idx + 1}. [${issue.severity}] ${issue.title}
           <p className="download-description">Download your comprehensive security analysis report</p>
           <button className="download-button-enhanced" onClick={handleDownloadReport}>
             <FontAwesomeIcon icon={faFileDownload} />
-            Download Report as Text
+            Download Report as PDF
           </button>
         </div>
       </div>
